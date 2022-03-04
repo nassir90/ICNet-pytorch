@@ -31,11 +31,11 @@ class ICNet(SegBaseModel):
         x_sub1 = self.conv_sub1(x)
 
         # sub 2
-        x_sub2 = F.interpolate(x, scale_factor=0.5, mode='bilinear', align_corners=True)
+        x_sub2 = F.interpolate(x, recompute_scale_factor=True, scale_factor=0.5, mode='bilinear', align_corners=True)
         _, x_sub2, _, _ = self.base_forward(x_sub2)
         
         # sub 4
-        x_sub4 = F.interpolate(x, scale_factor=0.25, mode='bilinear', align_corners=True)
+        x_sub4 = F.interpolate(x, recompute_scale_factor=True, scale_factor=0.25, mode='bilinear', align_corners=True)
         _, _, _, x_sub4 = self.base_forward(x_sub4)
         # add PyramidPoolingModule
         x_sub4 = self.ppm(x_sub4)
